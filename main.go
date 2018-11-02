@@ -1,6 +1,6 @@
 //go:generate gw-codegen file://all-unix-style.yml generated_all-unix-style.go !windows
 //go:generate gw-codegen file://windows.yml generated_windows.go
-//go:generate gw-codegen https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json dockerworker/payload.go
+// //go:generate gw-codegen https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json dockerworker/payload.go
 
 package main
 
