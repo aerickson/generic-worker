@@ -424,8 +424,6 @@ tasks:
   ################### Linux amd64 Build ####################
   ##########################################################
 
-  # - provisionerId: scl3-puppet
-  #   workerType: os-x-10-10-gw
   - provisionerId: pmoore-manual
     workerType: linux-amd64
     metadata:
@@ -444,32 +442,32 @@ tasks:
     payload:
       maxRunTime: 3600
       command:
-        - /bin/bash
-        - -vxec
-        - |
-          export CGO_ENABLED=0
-          go version
-          go env
-          curl -s http://taskcluster/secrets/v1/secret/repo:github.com/taskcluster/generic-worker | sed -n 's/.*"b64_encoded_credentials_script": "\(.*\)".*/\1/p' | base64 -d > ~/env_private.sh
-          source ~/env_private.sh
-          mkdir -p "${GOPATH}/src/github.com/taskcluster"
-          cd "${GOPATH}/src/github.com/taskcluster"
-          if [ ! -d generic-worker/.git ]; then rm -rf generic-worker; git clone '{{ event.head.repo.url }}' 'generic-worker'; fi
-          cd 'generic-worker'
-          git fetch '{{ event.head.repo.url }}' "+{{ event.head.ref }}:refs/heads/X${TASK_ID}"
-          git checkout -f "X${TASK_ID}"
-          git reset --hard '{{ event.head.sha }}'
-          git clean -fdx
-          git checkout -B tmp -t "X${TASK_ID}"
-          go get -v -u github.com/taskcluster/livelog github.com/taskcluster/taskcluster-proxy github.com/gordonklaus/ineffassign
-          cd gw-codegen
-          go get -v -u
-          cd ..
-          go generate
-          go get -ldflags "-X main.revision=$(git rev-parse HEAD)" -v -u -t ./...
-          test "$(git status --porcelain | wc -l)" == 0
-          GORACE=history_size=7 CGO_ENABLED=1 go test -timeout 30m -ldflags "-X github.com/taskcluster/generic-worker.revision=$(git rev-parse HEAD)" -v -race ./...
-          "${GOPATH}/bin/ineffassign" .
+        - - /bin/bash
+          - -vxec
+          - |
+            export CGO_ENABLED=0
+            go version
+            go env
+            curl -s http://taskcluster/secrets/v1/secret/repo:github.com/taskcluster/generic-worker | sed -n 's/.*"b64_encoded_credentials_script": "\(.*\)".*/\1/p' | base64 -d > ~/env_private.sh
+            source ~/env_private.sh
+            mkdir -p "${GOPATH}/src/github.com/taskcluster"
+            cd "${GOPATH}/src/github.com/taskcluster"
+            if [ ! -d generic-worker/.git ]; then rm -rf generic-worker; git clone '{{ event.head.repo.url }}' 'generic-worker'; fi
+            cd 'generic-worker'
+            git fetch '{{ event.head.repo.url }}' "+{{ event.head.ref }}:refs/heads/X${TASK_ID}"
+            git checkout -f "X${TASK_ID}"
+            git reset --hard '{{ event.head.sha }}'
+            git clean -fdx
+            git checkout -B tmp -t "X${TASK_ID}"
+            go get -v -u github.com/taskcluster/livelog github.com/taskcluster/taskcluster-proxy github.com/gordonklaus/ineffassign
+            cd gw-codegen
+            go get -v -u
+            cd ..
+            go generate
+            go get -ldflags "-X main.revision=$(git rev-parse HEAD)" -v -u -t ./...
+            test "$(git status --porcelain | wc -l)" == 0
+            GORACE=history_size=7 CGO_ENABLED=1 go test -timeout 30m -ldflags "-X github.com/taskcluster/generic-worker.revision=$(git rev-parse HEAD)" -v -race ./...
+            "${GOPATH}/bin/ineffassign" .
       artifacts:
         - name: public/build/generic-worker-linux-amd64
           path: gopath1.10.1/bin/generic-worker
