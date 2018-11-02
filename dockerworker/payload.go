@@ -9,101 +9,106 @@ import (
 )
 
 type (
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/definitions/artifact
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/definitions/artifact
 	Artifact struct {
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/definitions/artifact/properties/expires
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/definitions/artifact/properties/expires
 		Expires tcclient.Time `json:"expires,omitempty"`
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/definitions/artifact/properties/path
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/definitions/artifact/properties/path
 		Path string `json:"path"`
 
 		// Possible values:
 		//   * "file"
 		//   * "directory"
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/definitions/artifact/properties/type
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/definitions/artifact/properties/type
 		Type string `json:"type"`
 	}
 
 	// Set of capabilities that must be enabled or made available to the task container Example: ```{ "capabilities": { "privileged": true }```
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities
 	Capabilities struct {
 
 		// Allows devices from the host system to be attached to a task container similar to using `--device` in docker.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities/properties/devices
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices
 		Devices Devices `json:"devices,omitempty"`
 
 		// Allows a task to run in a privileged container, similar to running docker with `--privileged`.  This only works for worker-types configured to enable it.
 		//
 		// Default:    false
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities/properties/privileged
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/privileged
 		Privileged bool `json:"privileged,omitempty"`
 	}
 
 	// Allows devices from the host system to be attached to a task container similar to using `--device` in docker.
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities/properties/devices
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices
 	Devices struct {
 
 		// Audio loopback device created using snd-aloop
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities/properties/devices/properties/loopbackAudio
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/loopbackAudio
 		LoopbackAudio bool `json:"loopbackAudio,omitempty"`
 
 		// Video loopback device created using v4l2loopback.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities/properties/devices/properties/loopbackVideo
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/loopbackVideo
 		LoopbackVideo bool `json:"loopbackVideo,omitempty"`
+
+		// Phone device that will be created using Testdroid
+		//
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/phone
+		Phone PhoneDevice `json:"phone,omitempty"`
 	}
 
 	// Image to use for the task.  Images can be specified as an image tag as used by a docker registry, or as an object declaring type and name/namespace
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[3]
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[3]
 	DockerImageArtifact struct {
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[3]/properties/path
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[3]/properties/path
 		Path string `json:"path"`
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[3]/properties/taskId
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[3]/properties/taskId
 		TaskID string `json:"taskId"`
 
 		// Possible values:
 		//   * "task-image"
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[3]/properties/type
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[3]/properties/type
 		Type string `json:"type"`
 	}
 
 	// Image to use for the task.  Images can be specified as an image tag as used by a docker registry, or as an object declaring type and name/namespace
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[0]
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[0]
 	DockerImageName string
 
 	// `.payload` field of the queue.
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#
 	DockerWorkerPayload struct {
 
 		// Artifact upload map example: ```{"public/build.tar.gz": {"path": "/home/worker/build.tar.gz", "expires": "2016-05-28T16:12:56.693817Z", "type": "file"}}```
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/artifacts
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/artifacts
 		Artifacts map[string]Artifact `json:"artifacts,omitempty"`
 
 		// Caches are mounted within the docker container at the mount point specified. Example: ```{ "CACHE NAME": "/mount/path/in/container" }```
 		//
 		// Map entries:
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/cache/additionalProperties
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/cache/additionalProperties
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/cache
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/cache
 		Cache map[string]string `json:"cache,omitempty"`
 
 		// Set of capabilities that must be enabled or made available to the task container Example: ```{ "capabilities": { "privileged": true }```
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/capabilities
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities
 		Capabilities Capabilities `json:"capabilities,omitempty"`
 
 		// Example: `['/bin/bash', '-c', 'ls']`.
@@ -111,17 +116,17 @@ type (
 		// Default:    []
 		//
 		// Array items:
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/command/items
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/command/items
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/command
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/command
 		Command []string `json:"command,omitempty"`
 
 		// List of base64 encoded asymmetric encrypted environment variables. See /docs/reference/workers/docker-worker/environment#encrypted-environment-variables
 		//
 		// Array items:
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/encryptedEnv/items
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/encryptedEnv/items
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/encryptedEnv
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/encryptedEnv
 		EncryptedEnv []string `json:"encryptedEnv,omitempty"`
 
 		// Example: ```
@@ -132,14 +137,14 @@ type (
 		// ```
 		//
 		// Map entries:
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/env/additionalProperties
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/env/additionalProperties
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/env
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/env
 		Env map[string]string `json:"env,omitempty"`
 
 		// Used to enable additional functionality.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features
 		Features FeatureFlags `json:"features,omitempty"`
 
 		// Image to use for the task.  Images can be specified as an image tag as used by a docker registry, or as an object declaring type and name/namespace
@@ -150,149 +155,173 @@ type (
 		//   * IndexedDockerImage
 		//   * DockerImageArtifact
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image
 		Image json.RawMessage `json:"image"`
-
-		// Specifies a custom location for the livelog artifact
-		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/log
-		Log string `json:"log,omitempty"`
 
 		// Maximum time the task container can run in seconds
 		//
 		// Mininum:    1
 		// Maximum:    86400
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/maxRunTime
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/maxRunTime
 		MaxRunTime float64 `json:"maxRunTime"`
 
 		// By default docker-worker will fail a task with a non-zero exit status without retrying.  This payload property allows a task owner to define certain exit statuses that will be marked as a retriable exception.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/onExitStatus
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/onExitStatus
 		OnExitStatus ExitStatusHandling `json:"onExitStatus,omitempty"`
 
 		// Syntax:     ^https?://[\x20-\x7e]*$
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/supersederUrl
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/supersederUrl
 		SupersederURL string `json:"supersederUrl,omitempty"`
 	}
 
 	// By default docker-worker will fail a task with a non-zero exit status without retrying.  This payload property allows a task owner to define certain exit statuses that will be marked as a retriable exception.
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/onExitStatus
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/onExitStatus
 	ExitStatusHandling struct {
 
 		// If the task exists with a purge caches exit status, all caches associated with the task will be purged.
 		//
 		// Array items:
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/onExitStatus/properties/purgeCaches/items
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/onExitStatus/properties/purgeCaches/items
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/onExitStatus/properties/purgeCaches
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/onExitStatus/properties/purgeCaches
 		PurgeCaches []float64 `json:"purgeCaches,omitempty"`
 
 		// If the task exists with a retriable exit status, the task will be marked as an exception and a new run created.
 		//
 		// Array items:
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/onExitStatus/properties/retry/items
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/onExitStatus/properties/retry/items
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/onExitStatus/properties/retry
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/onExitStatus/properties/retry
 		Retry []float64 `json:"retry,omitempty"`
 	}
 
 	// Used to enable additional functionality.
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features
 	FeatureFlags struct {
 
 		// This allows you to use the Linux ptrace functionality inside the container; it is otherwise disallowed by Docker's security policy.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/allowPtrace
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/allowPtrace
 		AllowPtrace bool `json:"allowPtrace,omitempty"`
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/artifacts
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/artifacts
 		Artifacts bool `json:"artifacts,omitempty"`
+
+		// Useful for situations where it is impossible to reach the worker and parsing the azure livelog is possible
+		//
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/azureLiveLog
+		AzureLiveLog bool `json:"azureLiveLog,omitempty"`
 
 		// The Balrog stage proxy feature allows tasks to make requests to http://balrog which is a proxied connection through a vpn tunnel to the stage balrog update server.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/balrogStageVPNProxy
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/balrogStageVPNProxy
 		BalrogStageVPNProxy bool `json:"balrogStageVPNProxy,omitempty"`
 
 		// The Balrog proxy feature allows tasks to make requests to http://balrog which is a proxied connection through a vpn tunnel to production balrog update server.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/balrogVPNProxy
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/balrogVPNProxy
 		BalrogVPNProxy bool `json:"balrogVPNProxy,omitempty"`
 
 		// Useful if live logging is not interesting but the overalllog is later on
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/bulkLog
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/bulkLog
 		BulkLog bool `json:"bulkLog,omitempty"`
-
-		// An artifact named chainOfTrust.json.asc should be generated which will include information for downstream tasks to build a level of trust for the artifacts produced by the task and the environment it ran in.
-		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/chainOfTrust
-		ChainOfTrust bool `json:"chainOfTrust,omitempty"`
 
 		// Runs docker-in-docker and binds `/var/run/docker.sock` into the container. Doesn't allow privileged mode, capabilities or host volume mounts.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/dind
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/dind
 		Dind bool `json:"dind,omitempty"`
 
 		// Uploads docker images as artifacts
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/dockerSave
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/dockerSave
 		DockerSave bool `json:"dockerSave,omitempty"`
 
 		// This allows you to interactively run commands inside the container and attaches you to the stdin/stdout/stderr over a websocket. Can be used for SSH-like access to docker containers.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/interactive
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/interactive
 		Interactive bool `json:"interactive,omitempty"`
 
 		// Logs are stored on the worker during the duration of tasks and available via http chunked streaming then uploaded to s3
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/localLiveLog
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/localLiveLog
 		LocalLiveLog bool `json:"localLiveLog,omitempty"`
 
 		// The Releng API proxy service allows tasks to talk to releng api using an authorization token based on the task's scopes
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/relengAPIProxy
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/relengAPIProxy
 		RelengAPIProxy bool `json:"relengAPIProxy,omitempty"`
 
 		// The auth proxy allows making requests to taskcluster/queue and taskcluster/scheduler directly from your task with the same scopes as set in the task. This can be used to make api calls via the [client](https://github.com/taskcluster/taskcluster-client) CURL, etc... Without embedding credentials in the task.
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/features/properties/taskclusterProxy
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/taskclusterProxy
 		TaskclusterProxy bool `json:"taskclusterProxy,omitempty"`
+
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/features/properties/testdroidProxy
+		TestdroidProxy bool `json:"testdroidProxy,omitempty"`
 	}
 
 	// Image to use for the task.  Images can be specified as an image tag as used by a docker registry, or as an object declaring type and name/namespace
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[2]
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[2]
 	IndexedDockerImage struct {
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[2]/properties/namespace
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[2]/properties/namespace
 		Namespace string `json:"namespace"`
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[2]/properties/path
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[2]/properties/path
 		Path string `json:"path"`
 
 		// Possible values:
 		//   * "indexed-image"
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[2]/properties/type
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[2]/properties/type
 		Type string `json:"type"`
 	}
 
 	// Image to use for the task.  Images can be specified as an image tag as used by a docker registry, or as an object declaring type and name/namespace
 	//
-	// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[1]
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[1]
 	NamedDockerImage struct {
 
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[1]/properties/name
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[1]/properties/name
 		Name string `json:"name"`
 
 		// Possible values:
 		//   * "docker-image"
 		//
-		// See https://raw.githubusercontent.com/taskcluster/docker-worker/master/schemas/v1/payload.json#/properties/image/oneOf[1]/properties/type
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/image/oneOf[1]/properties/type
+		Type string `json:"type"`
+	}
+
+	// Phone device that will be created using Testdroid
+	//
+	// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/phone
+	PhoneDevice struct {
+
+		// URL for the build the phone has been (or will be) flashed with
+		//
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/phone/properties/build
+		Build string `json:"build"`
+
+		// The memory configuration the device to be configured with
+		//
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/phone/properties/memory
+		Memory string `json:"memory"`
+
+		// Number of sims to be available in the device
+		//
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/phone/properties/sims
+		Sims string `json:"sims"`
+
+		// Phone device type. Example: 'flame'
+		//
+		// See https://raw.githubusercontent.com/taskcluster/docker-worker/66dfa0ec97602285fa5f05c2d8cbf487f52c7e27/schemas/payload.json#/properties/capabilities/properties/devices/properties/phone/properties/type
 		Type string `json:"type"`
 	}
 )
