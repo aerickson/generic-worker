@@ -462,7 +462,9 @@ func main() {
 			if err != nil {
 				os.Exit(int(CANT_SAVE_CONFIG))
 			}
+			log.Printf("main: about to run securefiles")
 			err = fileutil.SecureFiles([]string{configFile})
+			log.Printf("main: securefiles err: %v", err)
 			if err != nil {
 				os.Exit(int(CANT_SECURE_CONFIG))
 			}
