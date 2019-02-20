@@ -121,3 +121,20 @@ func TestBoolAsString(t *testing.T) {
 		t.Fatalf("Was expecting error text to include %q but it didn't: %v", expectedErrorText, err)
 	}
 }
+
+func TestUnwritableConfig(t *testing.T) {
+	file := filepath.Join("testdata", "config", "unwritable.json")
+	const ipaddr = "2.1.2.1"
+	const workerType = "some-worker-type"
+	config, err := loadConfig(file, false, false)
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+	if config != nil {
+		err = config.Persist(configFile)
+		if err == nil {
+			// os.Exit(int(CANT_SAVE_CONFIG))
+			t.Fatalf("should have had an error")
+		}
+	}
+}
